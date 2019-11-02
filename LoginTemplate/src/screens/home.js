@@ -25,6 +25,17 @@ export default class HomeScreen extends React.Component {
     firebase.auth().signOut();
   };
 
+  _insertANY() {
+    firebase
+      .database()
+      .ref("users/" + "Miguel")
+      .set({
+        name: "Miguel",
+        address: "Paraiso"
+      });
+    ToastAndroid.show("Insertado", ToastAndroid.SHORT);
+  }
+
   _insert() {
     firebase
       .database()
@@ -32,7 +43,7 @@ export default class HomeScreen extends React.Component {
       .set({
         name: this.state.displayName
       });
-    ToastAndroid.show("HOLLAAA", ToastAndroid.SHORT);
+    ToastAndroid.show("Insertado", ToastAndroid.SHORT);
   }
 
   _get() {
@@ -40,11 +51,30 @@ export default class HomeScreen extends React.Component {
       firebase
         .database()
         .ref("users/")
+        .limitToLast(2)
         .on("value", data => {
           console.log(data.toJSON());
           ToastAndroid.show(JSON.stringify(data.toJSON()), ToastAndroid.SHORT);
         });
     }, 5000);
+  }
+
+  _update() {
+    firebase
+      .database()
+      .ref("users/" + this.state.displayName)
+      .update({
+        name: "pablo"
+      });
+    ToastAndroid.show("Actualizado", ToastAndroid.SHORT);
+  }
+
+  _delete() {
+    firebase
+      .database()
+      .ref("users/" + this.state.displayName)
+      .remove();
+    ToastAndroid.show("Insertado", ToastAndroid.SHORT);
   }
 
   render() {
@@ -61,6 +91,27 @@ export default class HomeScreen extends React.Component {
 
         <TouchableOpacity style={{ marginTop: 32 }} onPress={() => this._get()}>
           <Text>GET</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ marginTop: 32 }}
+          onPress={() => this._update()}
+        >
+          <Text>UPDATE</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ marginTop: 32 }}
+          onPress={() => this._delete()}
+        >
+          <Text>DELETE</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ marginTop: 32 }}
+          onPress={() => this._insertANY()}
+        >
+          <Text>ANY</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={{ marginTop: 32 }} onPress={this.signOutUser}>

@@ -1,5 +1,5 @@
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import { creatStackNavigator, createStackNavigator } from "react-navigation-stack";
+import { createStackNavigator } from "react-navigation-stack";
 import LoginScreen from "./src/screens/auth/login";
 import RegisterScreen from "./src/screens/auth/register";
 import LoadingScreen  from "./src/screens/loading";
